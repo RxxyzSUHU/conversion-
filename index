@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konversi Latin & Angka ke Aksara Sunda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+        textarea, .output-box {
+            width: 100%;
+            padding: 12px;
+            background-color: #eee;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            resize: none;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .buttons button {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .buttons button:hover {
+            background-color: #777;
+        }
+        .output-label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+        .output-box {
+            min-height: 80px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Konversi Latin & Angka ke Aksara Sunda</h1>
+        
+        <!-- Input Text Area -->
+        <label>Angka atau Teks (Latin):</label>
+        <textarea id="inputText" placeholder="Masukkan teks atau angka..." rows="3"></textarea>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button onclick="convert()">Konversi</button>
+            <button onclick="reset()">Hapus</button>
+            <button onclick="reverse()">Aksara Sunda ke Latin</button>
+        </div>
+
+        <!-- Output Text Area -->
+        <label class="output-label">Hasil (Aksara Sunda):</label>
+        <div class="output-box" id="outputText"></div>
+    </div>
+
+    <script>
+        const latinToSundanese = {
+            'a': 'ᮃ', 'b': 'ᮘ', 'c': 'ᮎ', 'd': 'ᮓ', 'e': 'ᮩ',
+            'f': 'ᮖ', 'g': 'ᮌ', 'h': 'ᮠ', 'i': 'ᮤ', 'j': 'ᮏ',
+            'k': 'ᮊ', 'l': 'ᮜ', 'm': 'ᮙ', 'n': 'ᮔ', 'o': 'ᮧ',
+            'p': 'ᮕ', 'q': 'ᮋ', 'r': 'ᮛ', 's': 'ᮞ', 't': 'ᮒ',
+            'u': 'ᮥ', 'v': 'ᮗ', 'w': 'ᮝ', 'x': 'ᮐ', 'y': 'ᮚ', 'z': 'ᮑ'
+        };
+
+        const sundaneseToLatin = {
+            'ᮃ': 'a', 'ᮘ': 'b', 'ᮎ': 'c', 'ᮓ': 'd', 'ᮩ': 'e',
+            'ᮖ': 'f', 'ᮌ': 'g', 'ᮠ': 'h', 'ᮤ': 'i', 'ᮏ': 'j',
+            'ᮊ': 'k', 'ᮜ': 'l', 'ᮙ': 'm', 'ᮔ': 'n', 'ᮧ': 'o',
+            'ᮕ': 'p', 'ᮋ': 'q', 'ᮛ': 'r', 'ᮞ': 's', 'ᮒ': 't',
+            'ᮥ': 'u', 'ᮗ': 'v', 'ᮝ': 'w', 'ᮐ': 'x', 'ᮚ': 'y', 'ᮑ': 'z'
+        };
+
+        const numberToSundanese = {
+            '0': '᮰', '1': '᮱', '2': '᮲', '3': '᮳', '4': '᮴',
+            '5': '᮵', '6': '᮶', '7': '᮷', '8': '᮸', '9': '᮹'
+        };
+
+        function convert() {
+            let inputText = document.getElementById('inputText').value;
+            let translatedText = '';
+
+            for (let char of inputText) {
+                if (numberToSundanese[char]) {
+                    translatedText += numberToSundanese[char];
+                } else {
+                    translatedText += latinToSundanese[char.toLowerCase()] || char;
+                }
+            }
+
+            document.getElementById('outputText').textContent = translatedText;
+        }
+
+        function reverse() {
+            let inputText = document.getElementById('outputText').textContent;
+            let translatedText = '';
+
+            for (let char of inputText) {
+                translatedText += sundaneseToLatin[char] || Object.keys(numberToSundanese).find(key => numberToSundanese[key] === char) || char;
+            }
+
+            document.getElementById('outputText').textContent = translatedText;
+        }
+
+        function reset() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').textContent = '';
+        }
+    </script>
+
+</body>
+</html>
